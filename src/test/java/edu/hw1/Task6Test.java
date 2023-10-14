@@ -28,5 +28,4 @@ public class Task6Test {
         assertThat(countK).isEqualTo(-1);
     }
 
-
 }

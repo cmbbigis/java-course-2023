@@ -9,7 +9,7 @@ public final class Task2 {
             return 1;
         }
         var count = 0;
-        while(numbers != 0) {
+        while (numbers != 0) {
             count++;
             numbers /= 10;
         }

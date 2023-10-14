@@ -20,6 +20,7 @@ public class Task5Test {
 
         assertThat(result).isTrue();
     }
+
     @Test
     @DisplayName("Not palindrome")
     void test3() {
@@ -27,6 +28,7 @@ public class Task5Test {
 
         assertThat(result).isTrue();
     }
+
     @Test
     @DisplayName("Descendant also not palindrome")
     void test4() {
