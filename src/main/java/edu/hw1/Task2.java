@@ -4,14 +4,17 @@ public final class Task2 {
     private Task2() {
     }
 
-    public static int countDigits(int numbers) {
-        if (numbers < 10) {
+    final private static int TEN = 10;
+
+    public static int countDigits(int number) {
+        var privateNumber = number;
+        if (privateNumber < TEN) {
             return 1;
         }
         var count = 0;
-        while (numbers != 0) {
+        while (privateNumber != 0) {
             count++;
-            numbers /= 10;
+            privateNumber /= TEN;
         }
         return count;
     }

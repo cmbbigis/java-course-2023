@@ -14,8 +14,8 @@ public final class Task5 {
         }
         var descendantSb = new StringBuilder();
         for (var i = 1; i < string.length(); i += 2) {
-            descendantSb.append(Integer.parseInt("" + string.charAt(i)) +
-                Integer.parseInt("" + string.charAt(i - 1)));
+            descendantSb.append(Integer.parseInt("" + string.charAt(i))
+                + Integer.parseInt("" + string.charAt(i - 1)));
         }
         var descendant = descendantSb.toString();
         if (descendant.contentEquals(descendantSb.reverse())) {
