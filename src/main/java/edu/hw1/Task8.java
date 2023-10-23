@@ -1,6 +1,10 @@
 package edu.hw1;
 
 public final class Task8 {
+    private Task8() {
+
+    }
+
     final private static int N = 8;
     final private static int BOTTOM_BORDER = 0;
     final private static int TOP_BORDER = 7;

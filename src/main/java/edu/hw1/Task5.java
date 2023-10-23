@@ -1,7 +1,12 @@
 package edu.hw1;
 
 public final class Task5 {
+    private Task5() {
+
+    }
+
     private final static String EMPTY_STRING = "";
+
     public static boolean isPalindromeDescendant(int number) {
         var string = Integer.toString(number);
         if (string.length() < 2) {

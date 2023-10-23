@@ -3,6 +3,10 @@ package edu.hw1;
 import java.util.Arrays;
 
 public final class Task3 {
+    private Task3() {
+
+    }
+
     public static boolean isNestable(int[] a1, int[] a2) {
         if (Arrays.stream(a1).min().isPresent() && Arrays.stream(a2).min().isPresent()) {
             return Arrays.stream(a1).min().getAsInt() > Arrays.stream(a2).min().getAsInt()
