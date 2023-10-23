@@ -1,31 +1,30 @@
 package edu.hw1;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task7Test {
     @Test
-    @DisplayName("Right")
-    void test1() {
-        int minute = Task7.rotateRight(8, 1);
+    void eight_Rotate_CorrectResult() {
+        final int EXPECTED_NUMBER = 4;
 
-        assertThat(minute).isEqualTo(4);
+        int number = Task7.rotateRight(8, 1);
+        assertThat(number).isEqualTo(EXPECTED_NUMBER);
     }
 
     @Test
-    @DisplayName("Left")
-    void test2() {
-        int minute = Task7.rotateLeft(16, 1);
+    void sixteen_Rotate_CorrectResult() {
+        final int EXPECTED_NUMBER = 1;
 
-        assertThat(minute).isEqualTo(1);
+        int number = Task7.rotateLeft(16, 1);
+        assertThat(number).isEqualTo(EXPECTED_NUMBER);
     }
 
     @Test
-    @DisplayName("Left two steps")
-    void test3() {
-        int minute = Task7.rotateLeft(17, 2);
+    void seventeen_Rotate_CorrectResult() {
+        final int EXPECTED_NUMBER = 6;
 
-        assertThat(minute).isEqualTo(6);
+        int number = Task7.rotateLeft(17, 2);
+        assertThat(number).isEqualTo(EXPECTED_NUMBER);
     }
 }

@@ -1,30 +1,30 @@
 package edu.hw1;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task2Test {
     @Test
-    @DisplayName("Four digits")
-    void test1() {
+    void fourDigitNumber_CountDigits_Four() {
+        final int EXPECTED_COUNT = 4;
+
         var count = Task2.countDigits(4666);
-
-        assertThat(count).isEqualTo(4);
+        assertThat(count).isEqualTo(EXPECTED_COUNT);
     }
 
     @Test
-    @DisplayName("Three digits")
-    void test2() {
+    void threeDigitNumber_CountDigits_Three() {
+        final int EXPECTED_COUNT = 3;
+
         var count = Task2.countDigits(544);
-        assertThat(count).isEqualTo(3);
+        assertThat(count).isEqualTo(EXPECTED_COUNT);
     }
 
     @Test
-    @DisplayName("Zero")
-    void test3() {
-        var count = Task2.countDigits(0);
+    void zero_CountDigits_One() {
+        final int EXPECTED_COUNT = 1;
 
-        assertThat(count).isEqualTo(1);
+        var count = Task2.countDigits(0);
+        assertThat(count).isEqualTo(EXPECTED_COUNT);
     }
 }

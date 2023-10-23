@@ -1,47 +1,36 @@
 package edu.hw1;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task5Test {
     @Test
-    @DisplayName("Simple")
-    void test1() {
+    void palindromeNumber_Check_True() {
         var result = Task5.isPalindromeDescendant(11);
-
         assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("Descendant is palindrome")
-    void test2() {
+    void numberWithPalindromeDescendant_Check_True() {
         var result = Task5.isPalindromeDescendant(11211230);
-
         assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("Not palindrome")
-    void test3() {
+    void notPalindromeNumber_Check_False() {
         var result = Task5.isPalindromeDescendant(12);
-
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
     }
 
     @Test
-    @DisplayName("Descendant also not palindrome")
-    void test4() {
+    void numberWithNotPalindromeDescendant_Check_False() {
         var result = Task5.isPalindromeDescendant(1231);
-
-        assertThat(result).isTrue();
+        assertThat(result).isFalse();
     }
 
     @Test
-    @DisplayName("One digit")
-    void test5() {
+    void oneDigitNumber_Check_False() {
         var result = Task5.isPalindromeDescendant(1);
-
         assertThat(result).isFalse();
     }
 }

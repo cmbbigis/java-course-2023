@@ -1,15 +1,13 @@
 package edu.hw1;
 
 public final class Task7 {
-    private Task7() {
-    }
-
+    private final static int NUMBER_SYSTEM = 2;
     public static int rotateLeft(int n, int shift) {
-        return Integer.parseInt(new String(shiftArray(Integer.toBinaryString(n).toCharArray(), shift * -1)), 2);
+        return Integer.parseInt(new String(shiftArray(Integer.toBinaryString(n).toCharArray(), shift * -1)), NUMBER_SYSTEM);
     }
 
     public static int rotateRight(int n, int shift) {
-        return Integer.parseInt(new String(shiftArray(Integer.toBinaryString(n).toCharArray(), shift)), 2);
+        return Integer.parseInt(new String(shiftArray(Integer.toBinaryString(n).toCharArray(), shift)), NUMBER_SYSTEM);
     }
 
     private static char[] shiftArray(char[] incomingArray, int shift) {

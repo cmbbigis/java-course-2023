@@ -3,9 +3,6 @@ package edu.hw1;
 import java.util.Arrays;
 
 public final class Task6 {
-    private Task6() {
-    }
-
     final private static int MAX_OF_STEPS = 8;
     final private static int KAPREKAR_CONSTANT = 6174;
 
