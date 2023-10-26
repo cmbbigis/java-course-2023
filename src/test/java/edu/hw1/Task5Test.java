@@ -5,31 +5,31 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task5Test {
     @Test
-    void palindromeNumber_Check_True() {
+    void palindromeNumberCheckTrue() {
         var result = Task5.isPalindromeDescendant(11);
         assertThat(result).isTrue();
     }
 
     @Test
-    void numberWithPalindromeDescendant_Check_True() {
+    void numberWithPalindromeDescendantCheckTrue() {
         var result = Task5.isPalindromeDescendant(11211230);
         assertThat(result).isTrue();
     }
 
     @Test
-    void notPalindromeNumber_Check_False() {
+    void notPalindromeNumberCheckFalse() {
         var result = Task5.isPalindromeDescendant(12);
         assertThat(result).isFalse();
     }
 
     @Test
-    void numberWithNotPalindromeDescendant_Check_False() {
+    void numberWithNotPalindromeDescendantCheckFalse() {
         var result = Task5.isPalindromeDescendant(1231);
         assertThat(result).isFalse();
     }
 
     @Test
-    void oneDigitNumber_Check_False() {
+    void oneDigitNumberCheckFalse() {
         var result = Task5.isPalindromeDescendant(1);
         assertThat(result).isFalse();
     }

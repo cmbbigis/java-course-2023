@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task8Test {
     @Test
-    void isCapture_Check_True() {
+    void isCaptureCheckTrue() {
         boolean isCapture = Task8.knightBoardCapture(new int[][] {
             new int[] {0, 0, 0, 1, 0, 0, 0, 0},
             new int[] {0, 0, 0, 0, 0, 0, 0, 0},
@@ -20,7 +20,7 @@ public class Task8Test {
     }
 
     @Test
-    void isNotCapture_Check_False() {
+    void isNotCaptureCheckFalse() {
         boolean isCapture = Task8.knightBoardCapture(new int[][] {
             new int[] {1, 0, 1, 0, 1, 0, 1, 0},
             new int[] {0, 1, 0, 1, 0, 1, 0, 1},

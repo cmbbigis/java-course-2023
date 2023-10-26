@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task2Test {
     @Test
-    void fourDigitNumber_CountDigits_Four() {
+    void fourDigitNumberCountDigitsFour() {
         final int EXPECTED_COUNT = 4;
 
         var count = Task2.countDigits(4666);
@@ -13,7 +13,7 @@ public class Task2Test {
     }
 
     @Test
-    void threeDigitNumber_CountDigits_Three() {
+    void threeDigitNumberCountDigitsThree() {
         final int EXPECTED_COUNT = 3;
 
         var count = Task2.countDigits(544);
@@ -21,7 +21,7 @@ public class Task2Test {
     }
 
     @Test
-    void zero_CountDigits_One() {
+    void zeroCountDigitsOne() {
         final int EXPECTED_COUNT = 1;
 
         var count = Task2.countDigits(0);

@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task4Test {
     @Test
-    void stringWithDigits_ReverseString_CorrectResult() {
+    void stringWithDigitsReverseStringCorrectResult() {
         final String EXPECTED_STRING = "214365";
 
         String string = Task4.fixString("123456");
@@ -13,7 +13,7 @@ public class Task4Test {
     }
 
     @Test
-    void stringWithLetters_ReverseString_CorrectResult() {
+    void stringWithLettersReverseStringCorrectResult() {
         final String EXPECTED_STRING = "This is a mixed up string.";
 
         String string = Task4.fixString("hTsii  s aimex dpus rtni.g");
@@ -21,7 +21,7 @@ public class Task4Test {
     }
 
     @Test
-    void stringWithNotEvenCharsCount_ReverseString_CorrectResult() {
+    void stringWithNotEvenCharsCountReverseStringCorrectResult() {
         final String EXPECTED_STRING = "abcde";
 
         String string = Task4.fixString("badce");
@@ -29,7 +29,7 @@ public class Task4Test {
     }
 
     @Test
-    void stringWithOneChar_ReverseString_CorrectResult() {
+    void stringWithOneCharReverseStringCorrectResult() {
         final String EXPECTED_STRING = "b";
 
         String string = Task4.fixString("b");

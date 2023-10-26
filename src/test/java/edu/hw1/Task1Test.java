@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task1Test {
     @Test
-    void minuteWithoutSeconds_MinutesToSeconds_CorrectResult() {
+    void minuteWithoutSecondsMinutesToSecondsCorrectResult() {
         final int EXPECTED_SECONDS = 60;
 
         var seconds = Task1.minutesToSeconds("01:00");
@@ -13,7 +13,7 @@ public class Task1Test {
     }
 
     @Test
-    void minutesWithSeconds_MinutesToSeconds_CorrectResult() {
+    void minutesWithSecondsMinutesToSecondsCorrectResult() {
         final int EXPECTED_SECONDS = 836;
 
         var seconds = Task1.minutesToSeconds("13:56");
@@ -21,7 +21,7 @@ public class Task1Test {
     }
 
     @Test
-    void onlySeconds_MinutesToSeconds_CorrectResult() {
+    void onlySecondsMinutesToSecondsCorrectResult() {
         final int EXPECTED_SECONDS = 56;
 
         var seconds = Task1.minutesToSeconds("00:56");
@@ -29,7 +29,7 @@ public class Task1Test {
     }
 
     @Test
-    void invalidInput_MinutesToSeconds_CorrectResult() {
+    void invalidInputMinutesToSecondsCorrectResult() {
         final int EXPECTED_SECONDS = -1;
 
         var seconds = Task1.minutesToSeconds("10:60");
