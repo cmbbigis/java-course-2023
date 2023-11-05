@@ -8,6 +8,18 @@ public class Maze {
     private static final int S = 2;
     private static final int E = 4;
 
+    public Maze(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.grid = new int[height][width];
+    }
+
+    public Maze(int width, int height, int[][] grid) {
+        this.width = width;
+        this.height = height;
+        this.grid = grid;
+    }
+
     public Cell[][] toNormalView() {
         var result = new Cell[grid.length * 2][grid[0].length * 2];
         for (var y = 0; y <= grid.length * 2 - 2; y += 2) {
@@ -37,11 +49,5 @@ public class Maze {
             }
         }
         return result;
-    }
-
-    public Maze(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.grid = new int[height][width];
     }
 }

@@ -17,6 +17,9 @@ public class Generator {
     private Generator() {}
 
     public static Maze generate(int height, int width) {
+        if (height <= 1 && width <= 1) {
+            return null;
+        }
         var maze = new Maze(width, height);
         var seed = new Random().nextInt();
         var rand = new Random(seed);

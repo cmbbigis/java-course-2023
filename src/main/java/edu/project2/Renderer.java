@@ -9,7 +9,7 @@ public class Renderer {
 
     private Renderer() {}
 
-    public static void render(Maze maze) {
+    public static String render(Maze maze) {
         var result = maze.toNormalView();
         var output = new StringBuilder();
         output.append("■".repeat(result[0].length + 1));
@@ -21,10 +21,10 @@ public class Renderer {
             }
             output.append("\n");
         }
-        LOGGER.trace("\n" + output);
+        return output.toString();
     }
 
-    public static void render(Maze maze, List<Coordinate> path) {
+    public static String render(Maze maze, List<Coordinate> path) {
         var result = maze.toNormalView();
         for (Coordinate coordinate : path) {
             result[coordinate.row()][coordinate.col()] = new Cell(coordinate.row(), coordinate.col(), Cell.Type.PATH);
@@ -43,6 +43,6 @@ public class Renderer {
             }
             output.append("\n");
         }
-        LOGGER.trace("\n" + output);
+        return output.toString();
     }
 }

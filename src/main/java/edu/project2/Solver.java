@@ -10,10 +10,10 @@ public class Solver {
         new Coordinate(0, -1),
         new Coordinate(-1, 0)
     };
-    private boolean[][] visited;
-    private Cell[][] grid;
+    private static boolean[][] visited;
+    private static  Cell[][] grid;
 
-    public List<Coordinate> solve(Maze maze) {
+    public static List<Coordinate> solve(Maze maze) {
         if (maze.grid.length == 0) {
             return null;
         }
@@ -26,7 +26,7 @@ public class Solver {
         return null;
     }
 
-    private boolean dfs(int row, int col, int endY, int endX, List<Coordinate> path) {
+    private static boolean dfs(int row, int col, int endY, int endX, List<Coordinate> path) {
         if (!isSafe(row, col) || visited[row][col] || grid[row][col].type() == Cell.Type.WALL) {
             return false;
         }
@@ -46,7 +46,7 @@ public class Solver {
         return false;
     }
 
-    private boolean isSafe(int row, int col) {
+    private static boolean isSafe(int row, int col) {
         return row >= 0 && row < grid.length - 1 && col >= 0 && col < grid[0].length - 1
             && grid[row][col].type() != Cell.Type.WALL;
     }
