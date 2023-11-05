@@ -11,7 +11,9 @@ public class Solver {
         new Coordinate(-1, 0)
     };
     private static boolean[][] visited;
-    private static  Cell[][] grid;
+    private static Cell[][] grid;
+
+    private Solver() {}
 
     public static List<Coordinate> solve(Maze maze) {
         if (maze.grid.length == 0) {
