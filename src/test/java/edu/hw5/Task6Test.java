@@ -12,7 +12,7 @@ public class Task6Test {
         int[] numbers = new int[] {1, 2, 3, 4, 5};
 
         // when
-        int[] evenNumbers = Task1.filter(numbers);
+        int[] evenNumbers = Task6.filter(numbers);
 
         // then
         assertThat(evenNumbers)
