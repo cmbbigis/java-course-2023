@@ -1,22 +1,29 @@
 package edu.hw5;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task1Test {
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    void twoPeriodsCountAverage() {
+        final String[] periods = new String[] {
+            "2022-03-12, 20:20 - 2022-03-12, 23:50",
+            "2022-04-01, 21:30 - 2022-04-02, 01:20"
+        };
 
-        // when
-        int[] evenNumbers = Task1.filter(numbers);
+        var averageDuration = Task1.countAverageDuration(periods);
 
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+        assertThat(averageDuration).isEqualTo("3ч 40м");
+    }
+
+    @Test
+    void onePeriodCountAverage() {
+        final String[] periods = new String[] {
+            "2022-03-12, 20:20 - 2022-03-12, 23:50"
+        };
+
+        var averageDuration = Task1.countAverageDuration(periods);
+
+        assertThat(averageDuration).isEqualTo("3ч 30м");
     }
 }

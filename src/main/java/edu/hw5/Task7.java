@@ -1,54 +1,23 @@
 package edu.hw5;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import java.util.Objects;
+import java.util.regex.Pattern;
 
 public final class Task7 {
-    private final static Logger LOGGER = LogManager.getLogger();
-
     private Task7() {
     }
 
-    /**
-     * Filters an array of integers, returning only the even numbers.
-     *
-     * @param numbers the array of integers to filter
-     * @return an array of even integers from the original array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int[] filter(int[] numbers) {
-        Objects.requireNonNull(numbers);
-        LOGGER.trace("Filtering an array {}", numbers);
-
-        int count = count(numbers);
-
-        int[] result = new int[count];
-        int idx = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                result[idx++] = number;
-            }
-        }
-        return result;
+    public static boolean isMatchesPattern1(String string) {
+        var pattern = Pattern.compile("^.{2}0.*$");
+        return pattern.matcher(string).matches();
     }
 
-    /**
-     * Counts the number of even integers in an array of integers.
-     *
-     * @param numbers the array of integers to count
-     * @return the number of even integers in the array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int count(int[] numbers) {
-        Objects.requireNonNull(numbers);
+    public static boolean isMatchesPattern2(String string) {
+        var pattern = Pattern.compile("^(.).*\\1$");
+        return pattern.matcher(string).matches();
+    }
 
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                ++count;
-            }
-        }
-        return count;
+    public static boolean isLengthAtLeast1AndNoMoreThan3(String string) {
+        var pattern = Pattern.compile("^.{1,3}$");
+        return pattern.matcher(string).matches();
     }
 }

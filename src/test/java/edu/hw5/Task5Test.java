@@ -1,22 +1,33 @@
 package edu.hw5;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task5Test {
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    void validLicensePlateCheck() {
+        final String licensePlate = "Р235СМ96";
 
-        // when
-        int[] evenNumbers = Task5.filter(numbers);
+        var isLicensePlateValid = Task5.isLicensePlateValid(licensePlate);
 
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+        assertThat(isLicensePlateValid).isTrue();
+    }
+
+    @Test
+    void invalidLicensePlateWithDigitsFirstCheck() {
+        final String licensePlate = "123АВЕ777";
+
+        var isLicensePlateValid = Task5.isLicensePlateValid(licensePlate);
+
+        assertThat(isLicensePlateValid).isFalse();
+    }
+
+    @Test
+    void invalidLicensePlateWithInvalidLettersCheck() {
+        final String licensePlate = "А123ВГ77";
+
+        var isLicensePlateValid = Task5.isLicensePlateValid(licensePlate);
+
+        assertThat(isLicensePlateValid).isFalse();
     }
 }

@@ -1,22 +1,89 @@
 package edu.hw5;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
+import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task3Test {
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    void tomorrowParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.of(LocalDate.now().plusDays(1));
 
-        // when
-        int[] evenNumbers = Task3.filter(numbers);
+        var date = Task3.parseDate("tomorrow");
 
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+        assertThat(date).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void todayParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.of(LocalDate.now());
+
+        var date = Task3.parseDate("today");
+
+        assertThat(date).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void yesterdayParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.of(LocalDate.now().minusDays(1));
+
+        var date = Task3.parseDate("yesterday");
+
+        assertThat(date).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void dashSeparatedDateParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.of(LocalDate.of(2020, 10, 10));
+
+        var date = Task3.parseDate("2020-10-10");
+
+        assertThat(date).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void slashSeparatedDateParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.of(LocalDate.of(1976, 1, 3));
+
+        var date = Task3.parseDate("1/3/1976");
+
+        assertThat(date).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void slashSeparatedDateWithoutThousandsAndHundredsParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.of(LocalDate.of(2020, 1, 3));
+
+        var date = Task3.parseDate("1/3/20");
+
+        assertThat(date).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void dayAgoParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.of(LocalDate.now().minusDays(1));
+
+        var date = Task3.parseDate("1 day ago");
+
+        assertThat(date).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void daysAgoParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.of(LocalDate.now().minusDays(2));
+
+        var date = Task3.parseDate("2 days ago");
+
+        assertThat(date).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void notADateParseDate() {
+        final Optional<LocalDate> expectedResult = Optional.empty();
+
+        var date = Task3.parseDate("not a date");
+
+        assertThat(date).isEqualTo(expectedResult);
     }
 }

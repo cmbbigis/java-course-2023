@@ -1,54 +1,33 @@
 package edu.hw5;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import java.util.Objects;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class Task2 {
-    private final static Logger LOGGER = LogManager.getLogger();
-
     private Task2() {
     }
 
-    /**
-     * Filters an array of integers, returning only the even numbers.
-     *
-     * @param numbers the array of integers to filter
-     * @return an array of even integers from the original array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int[] filter(int[] numbers) {
-        Objects.requireNonNull(numbers);
-        LOGGER.trace("Filtering an array {}", numbers);
+    static final int MONTHS_IN_YEAR = 12;
+    static final int DAY_OF_FRIDAY = 13;
 
-        int count = count(numbers);
-
-        int[] result = new int[count];
-        int idx = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                result[idx++] = number;
+    public static List<LocalDate> findFridays13(int year) {
+        List<LocalDate> fridays13 = new ArrayList<>();
+        for (int month = 1; month <= MONTHS_IN_YEAR; month++) {
+            LocalDate date = LocalDate.of(year, month, DAY_OF_FRIDAY);
+            if (date.getDayOfWeek() == DayOfWeek.FRIDAY) {
+                fridays13.add(date);
             }
         }
-        return result;
+        return fridays13;
     }
 
-    /**
-     * Counts the number of even integers in an array of integers.
-     *
-     * @param numbers the array of integers to count
-     * @return the number of even integers in the array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int count(int[] numbers) {
-        Objects.requireNonNull(numbers);
-
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                ++count;
-            }
+    public static LocalDate nextFriday13(LocalDate date) {
+        var next13 = date.plusDays(1);
+        while (!(next13.getDayOfMonth() == DAY_OF_FRIDAY && next13.getDayOfWeek() == DayOfWeek.FRIDAY)) {
+            next13 = next13.plusDays(1);
         }
-        return count;
+        return next13;
     }
 }

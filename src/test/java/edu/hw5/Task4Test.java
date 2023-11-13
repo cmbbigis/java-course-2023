@@ -1,22 +1,24 @@
 package edu.hw5;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task4Test {
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    void invalidPasswordCheck() {
+        final String password = "password";
 
-        // when
-        int[] evenNumbers = Task4.filter(numbers);
+        var isValid = Task4.isPasswordValid(password);
 
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+        assertThat(isValid).isFalse();
+    }
+
+    @Test
+    void validPasswordCheck() {
+        final String password = "password!";
+
+        var isValid = Task4.isPasswordValid(password);
+
+        assertThat(isValid).isTrue();
     }
 }

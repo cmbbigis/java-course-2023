@@ -1,22 +1,26 @@
 package edu.hw5;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task6Test {
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    void subsequenceCheck() {
+        final String sequence = "achfdbaabgabcaabg";
+        final String subsequence = "abc";
 
-        // when
-        int[] evenNumbers = Task6.filter(numbers);
+        var isSubsequence = Task6.isSubsequence(subsequence, sequence);
 
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+        assertThat(isSubsequence).isTrue();
+    }
+
+    @Test
+    void notSubsequenceCheck() {
+        final String sequence = "afbc";
+        final String subsequence = "abc";
+
+        var isSubsequence = Task6.isSubsequence(subsequence, sequence);
+
+        assertThat(isSubsequence).isFalse();
     }
 }

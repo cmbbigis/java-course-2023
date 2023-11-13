@@ -1,54 +1,46 @@
 package edu.hw5;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Optional;
 
 public final class Task3 {
-    private final static Logger LOGGER = LogManager.getLogger();
-
     private Task3() {
     }
 
-    /**
-     * Filters an array of integers, returning only the even numbers.
-     *
-     * @param numbers the array of integers to filter
-     * @return an array of even integers from the original array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int[] filter(int[] numbers) {
-        Objects.requireNonNull(numbers);
-        LOGGER.trace("Filtering an array {}", numbers);
+    public static Optional<LocalDate> parseDate(String string) {
+        DateTimeFormatter[] formatters = {
+            DateTimeFormatter.ofPattern("yyyy-M-d"),
+            DateTimeFormatter.ofPattern("M/d/yyyy"),
+            DateTimeFormatter.ofPattern("M/d/yy")
+        };
+        LocalDate date = null;
 
-        int count = count(numbers);
-
-        int[] result = new int[count];
-        int idx = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                result[idx++] = number;
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                date = LocalDate.parse(string, formatter);
+                break;
+            } catch (DateTimeParseException ignored) {
             }
         }
-        return result;
-    }
 
-    /**
-     * Counts the number of even integers in an array of integers.
-     *
-     * @param numbers the array of integers to count
-     * @return the number of even integers in the array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int count(int[] numbers) {
-        Objects.requireNonNull(numbers);
-
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                ++count;
+        if (date == null) {
+            if (string.equalsIgnoreCase("tomorrow")) {
+                date = LocalDate.now().plusDays(1);
+            } else if (string.equalsIgnoreCase("today")) {
+                date = LocalDate.now();
+            } else if (string.equalsIgnoreCase("yesterday") || string.endsWith(" day ago")) {
+                date = LocalDate.now().minusDays(1);
+            } else if (string.endsWith(" days ago")) {
+                try {
+                    var days = Integer.parseInt(string.substring(0, string.indexOf(" ")));
+                    date = LocalDate.now().minusDays(days);
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
-        return count;
+
+        return Optional.ofNullable(date);
     }
 }

@@ -1,22 +1,60 @@
 package edu.hw5;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task7Test {
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    void validStringCheckPattern1() {
+        final String string = "1101";
 
-        // when
-        int[] evenNumbers = Task7.filter(numbers);
+        var isMatches = Task7.isMatchesPattern1(string);
 
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+        assertThat(isMatches).isTrue();
+    }
+
+    @Test
+    void invalidStringCheckPattern1() {
+        final String string = "101";
+
+        var isMatches = Task7.isMatchesPattern1(string);
+
+        assertThat(isMatches).isFalse();
+    }
+
+    @Test
+    void validStringCheckPattern2() {
+        final String string = "1001";
+
+        var isMatches = Task7.isMatchesPattern2(string);
+
+        assertThat(isMatches).isTrue();
+    }
+
+    @Test
+    void invalidStringCheckPattern2() {
+        final String string = "1000";
+
+        var isMatches = Task7.isMatchesPattern2(string);
+
+        assertThat(isMatches).isFalse();
+    }
+
+    @Test
+    void validStringCheckPattern3() {
+        final String string = "10";
+
+        var isMatches = Task7.isLengthAtLeast1AndNoMoreThan3(string);
+
+        assertThat(isMatches).isTrue();
+    }
+
+    @Test
+    void invalidStringCheckPattern3() {
+        final String string = "1000";
+
+        var isMatches = Task7.isLengthAtLeast1AndNoMoreThan3(string);
+
+        assertThat(isMatches).isFalse();
     }
 }

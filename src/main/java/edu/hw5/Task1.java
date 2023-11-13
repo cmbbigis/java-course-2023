@@ -1,54 +1,40 @@
 package edu.hw5;
 
-import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public final class Task1 {
-    private final static Logger LOGGER = LogManager.getLogger();
-
     private Task1() {
     }
 
-    /**
-     * Filters an array of integers, returning only the even numbers.
-     *
-     * @param numbers the array of integers to filter
-     * @return an array of even integers from the original array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int[] filter(int[] numbers) {
-        Objects.requireNonNull(numbers);
-        LOGGER.trace("Filtering an array {}", numbers);
+    static final int MINUTES_IN_HOUR = 60;
 
-        int count = count(numbers);
-
-        int[] result = new int[count];
-        int idx = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                result[idx++] = number;
-            }
+    public static String countAverageDuration(String[] periods) {
+        var durations = new ArrayList<Long>();
+        for (String period : periods) {
+            var dateTimes = period.split(" - ");
+            var from = stringToDateTime(dateTimes[0]);
+            var to = stringToDateTime(dateTimes[1]);
+            durations.add(Duration.between(from, to).toMinutes());
         }
-        return result;
+        var average = durations.stream()
+            .mapToDouble(l -> l)
+            .average()
+            .orElse(0.0);
+        var hours = (int) (average / MINUTES_IN_HOUR);
+        var minutes = (int) (average % MINUTES_IN_HOUR);
+        return String.format("%dч %dм", hours, minutes);
     }
 
-    /**
-     * Counts the number of even integers in an array of integers.
-     *
-     * @param numbers the array of integers to count
-     * @return the number of even integers in the array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int count(int[] numbers) {
-        Objects.requireNonNull(numbers);
-
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                ++count;
-            }
-        }
-        return count;
+    private static LocalDateTime stringToDateTime(String dateTime) {
+        var dateAndTime = dateTime.split(", ");
+        var date = dateAndTime[0].split("-");
+        var time = dateAndTime[1].split(":");
+        return LocalDateTime.of(Integer.parseInt(date[0]),
+            Integer.parseInt(date[1]),
+            Integer.parseInt(date[2]),
+            Integer.parseInt(time[0]),
+            Integer.parseInt(time[1]));
     }
 }
