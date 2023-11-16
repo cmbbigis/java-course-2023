@@ -5,42 +5,42 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task4Test {
     @Test
-    void numberWithOnlyUnitsConvertToRomanCorrectResult() {
-        final String EXPECTED_ROMAN = "II";
+    void numberWithOnlyUnitsConvertToRoman() {
+        final String expectedRoman = "II";
 
         var number = 2;
         var result = Task4.convertToRoman(number);
 
-        assertThat(result).isEqualTo(EXPECTED_ROMAN);
+        assertThat(result).isEqualTo(expectedRoman);
     }
 
     @Test
-    void numberWithTensConvertToRomanCorrectResult() {
-        final String EXPECTED_ROMAN = "XXVIII";
+    void numberWithTensConvertToRoman() {
+        final String expectedRoman = "XXVIII";
 
         var number = 28;
         var result = Task4.convertToRoman(number);
 
-        assertThat(result).isEqualTo(EXPECTED_ROMAN);
+        assertThat(result).isEqualTo(expectedRoman);
     }
 
     @Test
-    void numberWithHundredsConvertToRomanCorrectResult() {
-        final String EXPECTED_ROMAN = "DCXXVIII";
+    void numberWithHundredsConvertToRoman() {
+        final String expectedRoman = "DCXXVIII";
 
         var number = 628;
         var result = Task4.convertToRoman(number);
 
-        assertThat(result).isEqualTo(EXPECTED_ROMAN);
+        assertThat(result).isEqualTo(expectedRoman);
     }
 
     @Test
-    void numberWithThousandsToRomanCorrectResult() {
-        final String EXPECTED_ROMAN = "MMDCXXVIII";
+    void numberWithThousandsToRoman() {
+        final String expectedRoman = "MMDCXXVIII";
 
         var number = 2628;
         var result = Task4.convertToRoman(number);
 
-        assertThat(result).isEqualTo(EXPECTED_ROMAN);
+        assertThat(result).isEqualTo(expectedRoman);
     }
 }

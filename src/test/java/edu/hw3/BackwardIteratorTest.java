@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class BackwardIteratorTest {
     @Test
-    void iteratorCheckThatWorkCorrectCorrectResults() {
+    void iteratorCheckThatWorkCorrect() {
         var backwardIterator = new BackwardIterator<>(List.of(1,2,3));
 
         assertThat(backwardIterator.next()).isEqualTo(3);

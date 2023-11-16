@@ -5,18 +5,18 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class StockMarketTest {
     @Test
-    void emptyMarketAddCorrectResult() {
-        final int EXPECTED_COST = 1;
+    void emptyMarketAdd() {
+        final int expectedCost = 1;
 
         var market = new StockMarket();
         market.add(new Stock(1));
 
-        assertThat(market.mostValuableStock().cost).isEqualTo(EXPECTED_COST);
+        assertThat(market.mostValuableStock().cost).isEqualTo(expectedCost);
     }
 
     @Test
-    void marketDeleteCorrectResult() {
-        final int EXPECTED_COST = 1;
+    void marketDelete() {
+        final int expectedCost = 1;
 
         var market = new StockMarket();
         market.add(new Stock(1));
@@ -25,18 +25,18 @@ public class StockMarketTest {
         market.add(new Stock(1));
         market.remove(stockToDelete);
 
-        assertThat(market.mostValuableStock().cost).isEqualTo(EXPECTED_COST);
+        assertThat(market.mostValuableStock().cost).isEqualTo(expectedCost);
     }
 
     @Test
-    void marketGetMostValuableStockCorrectResult() {
-        final int EXPECTED_COST = 2;
+    void marketGetMostValuableStock() {
+        final int expectedCost = 2;
 
         var market = new StockMarket();
         market.add(new Stock(1));
         market.add(new Stock(2));
         market.add(new Stock(1));
 
-        assertThat(market.mostValuableStock().cost).isEqualTo(EXPECTED_COST);
+        assertThat(market.mostValuableStock().cost).isEqualTo(expectedCost);
     }
 }

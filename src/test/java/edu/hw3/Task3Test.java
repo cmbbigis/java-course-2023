@@ -6,8 +6,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task3Test {
     @Test
-    void filterEvenNumbers() {
-        final HashMap<String, Integer> EXPECTED_HASHMAP = new HashMap<>() {{
+    void arrayMakeFreqDict() {
+        final HashMap<String, Integer> expectedHashmap = new HashMap<>() {{
             put("bb", 2);
             put("a", 2);
         }};
@@ -15,6 +15,6 @@ public class Task3Test {
         var strings = new String[] {"a", "bb", "a", "bb"};
         var result = Task3.freqDict(strings);
 
-        assertThat(result).isEqualTo(EXPECTED_HASHMAP);
+        assertThat(result).isEqualTo(expectedHashmap);
     }
 }

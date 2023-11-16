@@ -13,11 +13,10 @@ public final class Task2 {
         for (var i = 0; i < string.length(); i++) {
             if (string.charAt(i) == '(') {
                 count++;
-                sb.append(string.charAt(i));
             } else {
                 count--;
-                sb.append(string.charAt(i));
             }
+            sb.append(string.charAt(i));
             if (count == 0) {
                 result.add(sb.toString());
                 sb = new StringBuilder();

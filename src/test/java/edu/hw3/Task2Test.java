@@ -6,12 +6,22 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task2Test {
     @Test
-    void simpleStringClusterizeCorrectResult() {
-        final List<String> EXPECTED_RESULT = List.of("()", "()", "()");
+    void simpleStringClusterize() {
+        final List<String> expectedResult = List.of("()", "()", "()");
 
         var string = "()()()";
         var result = Task2.clusterize(string);
 
-        assertThat(result).isEqualTo(EXPECTED_RESULT);
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void nestedBracketsClusterize() {
+        final List<String> expectedResult = List.of("((()))");
+
+        var string = "((()))";
+        var result = Task2.clusterize(string);
+
+        assertThat(result).isEqualTo(expectedResult);
     }
 }
