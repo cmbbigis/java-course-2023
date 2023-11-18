@@ -1,54 +1,49 @@
 package edu.hw6;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.Objects;
 
 public final class Task6 {
-    private final static Logger LOGGER = LogManager.getLogger();
-
     private Task6() {
     }
 
-    /**
-     * Filters an array of integers, returning only the even numbers.
-     *
-     * @param numbers the array of integers to filter
-     * @return an array of even integers from the original array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int[] filter(int[] numbers) {
-        Objects.requireNonNull(numbers);
-        LOGGER.trace("Filtering an array {}", numbers);
+    private final static Logger LOGGER = LogManager.getLogger();
 
-        int count = count(numbers);
+    private final static String PORT_STRING = "Порт ";
 
-        int[] result = new int[count];
-        int idx = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                result[idx++] = number;
+    private static final int PORTS_COUNT = 49151;
+    private static final int HTTP_PORT = 80;
+    private static final int FTP_PORT = 21;
+    private static final int SMTP_PORT = 25;
+    private static final int SSH_PORT = 22;
+    private static final int HTTPS_PORT = 443;
+    private static final int DNS_PORT = 53;
+
+    private static final Map<Integer, String> KNOWN_PORTS = new HashMap<>() {{
+        put(HTTP_PORT, "HTTP (HyperText Transfer Protocol)");
+        put(FTP_PORT, "FTP (File Transfer Protocol)");
+        put(SMTP_PORT, "SMTP (Simple Mail Transfer Protocol)");
+        put(SSH_PORT, "SSH (Secure Shell)");
+        put(HTTPS_PORT, "HTTPS (HyperText Transfer Protocol Secure)");
+        put(DNS_PORT, "DNS (Domain Name System)");
+    }};
+
+    public static void doTask() {
+        for (int port = 0; port <= PORTS_COUNT; port++) {
+            try (ServerSocket serverSocket = new ServerSocket(port)) {
+                LOGGER.trace(PORT_STRING + port + " свободен");
+            } catch (IOException e) {
+                String service = KNOWN_PORTS.getOrDefault(port, "Неизвестный сервис");
+                LOGGER.trace(PORT_STRING + port + " занят. Сервис: " + service);
             }
         }
-        return result;
     }
 
-    /**
-     * Counts the number of even integers in an array of integers.
-     *
-     * @param numbers the array of integers to count
-     * @return the number of even integers in the array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int count(int[] numbers) {
-        Objects.requireNonNull(numbers);
-
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                ++count;
-            }
-        }
-        return count;
-    }
+//    public static void main(String[] args) {
+//        doTask();
+//    }
 }

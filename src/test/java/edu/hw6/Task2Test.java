@@ -1,22 +1,48 @@
 package edu.hw6;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import java.io.*;
+import java.nio.file.*;
+import java.util.Comparator;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+
 public class Task2Test {
+    private static final String TEST_DIR = "testDir";
+    private static final String TEST_FILE = "testFile.txt";
+
+    @BeforeAll
+    public static void setUp() throws IOException {
+        Files.createDirectories(Paths.get(TEST_DIR));
+        Files.createFile(Paths.get(TEST_DIR, TEST_FILE));
+    }
+
+    @AfterAll
+    public static void tearDown() throws IOException {
+        Files.walk(Paths.get(TEST_DIR))
+            .sorted(Comparator.reverseOrder())
+            .map(Path::toFile)
+            .forEach(File::delete);
+    }
+
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    public void fileNameCloneFile() throws IOException {
+        Task2.cloneFile(Paths.get(TEST_DIR, TEST_FILE));
+        assertThat(Files.exists(Paths.get(TEST_DIR, TEST_FILE.substring(0, 8) + " — копия.txt"))).isTrue();
+    }
 
-        // when
-        int[] evenNumbers = Task1.filter(numbers);
+    @Test
+    public void fileNameCloneFileMultipleTimes() throws IOException {
+        for (int i = 1; i <= 4; i++) {
+            Task2.cloneFile(Paths.get(TEST_DIR, TEST_FILE));
+            assertThat(Files.exists(Paths.get(TEST_DIR, TEST_FILE.substring(0, 8) + " — копия (" + i + ").txt"))).isTrue();
+        }
+    }
 
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+    @Test
+    public void nonExistentFileNameTryCloneFile() {
+        Assertions.assertThrows(FileNotFoundException.class, () -> {
+            Task2.cloneFile(Paths.get(TEST_DIR, "nonExistentFile.txt"));
+        });
     }
 }

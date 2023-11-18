@@ -1,54 +1,35 @@
 package edu.hw6;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import java.util.Objects;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.zip.Adler32;
+import java.util.zip.CheckedOutputStream;
 
 public final class Task4 {
-    private final static Logger LOGGER = LogManager.getLogger();
-
     private Task4() {
     }
 
-    /**
-     * Filters an array of integers, returning only the even numbers.
-     *
-     * @param numbers the array of integers to filter
-     * @return an array of even integers from the original array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int[] filter(int[] numbers) {
-        Objects.requireNonNull(numbers);
-        LOGGER.trace("Filtering an array {}", numbers);
+    public static void doTask() {
+        String text = "Programming is learned by writing programs. ― Brian Kernighan";
+        Path path = Paths.get("output.txt");
 
-        int count = count(numbers);
+        try (OutputStream fileOutputStream = Files.newOutputStream(path);
+             CheckedOutputStream checkedOutputStream = new CheckedOutputStream(fileOutputStream, new Adler32());
+             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(checkedOutputStream);
+             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(bufferedOutputStream,
+                 StandardCharsets.UTF_8);
+             PrintWriter printWriter = new PrintWriter(outputStreamWriter)) {
 
-        int[] result = new int[count];
-        int idx = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                result[idx++] = number;
-            }
+            printWriter.println(text);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return result;
-    }
-
-    /**
-     * Counts the number of even integers in an array of integers.
-     *
-     * @param numbers the array of integers to count
-     * @return the number of even integers in the array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int count(int[] numbers) {
-        Objects.requireNonNull(numbers);
-
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                ++count;
-            }
-        }
-        return count;
     }
 }

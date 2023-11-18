@@ -1,54 +1,44 @@
 package edu.hw6;
 
-import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public final class Task2 {
-    private final static Logger LOGGER = LogManager.getLogger();
-
     private Task2() {
     }
 
-    /**
-     * Filters an array of integers, returning only the even numbers.
-     *
-     * @param numbers the array of integers to filter
-     * @return an array of even integers from the original array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int[] filter(int[] numbers) {
-        Objects.requireNonNull(numbers);
-        LOGGER.trace("Filtering an array {}", numbers);
+    private static final String COPY_STRING = " — копия";
 
-        int count = count(numbers);
+    public static void cloneFile(Path path) throws IOException {
+        if (Files.exists(path)) {
+            String fileName = path.getFileName().toString();
+            String baseName = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName;
+            String extension = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".")) : "";
+            Path directory = path.getParent();
+            int copyNumber = 1;
 
-        int[] result = new int[count];
-        int idx = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                result[idx++] = number;
+            if (Files.exists(Paths.get(path.toString().substring(0, path.toString().length() - extension.length())
+                + COPY_STRING + extension))) {
+                copyNumber++;
             }
-        }
-        return result;
-    }
 
-    /**
-     * Counts the number of even integers in an array of integers.
-     *
-     * @param numbers the array of integers to count
-     * @return the number of even integers in the array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int count(int[] numbers) {
-        Objects.requireNonNull(numbers);
+            while (true) {
+                String newFileName = baseName + COPY_STRING + (copyNumber > 1 ? " (" + (copyNumber - 1) + ")" : "")
+                    + extension;
+                Path newPath = directory.resolve(newFileName);
 
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                ++count;
+                if (!Files.exists(newPath)) {
+                    Files.copy(path, newPath);
+                    break;
+                }
+
+                copyNumber++;
             }
+        } else {
+            throw new FileNotFoundException("File not found: " + path);
         }
-        return count;
     }
 }

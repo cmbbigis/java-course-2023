@@ -1,22 +1,25 @@
 package edu.hw6;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import java.io.*;
+import java.nio.file.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+
 public class Task4Test {
+    private static final String TEST_FILE = "output.txt";
+    private static final String EXPECTED_TEXT = "Programming is learned by writing programs. ― Brian Kernighan";
+
+    @AfterAll
+    public static void tearDown() throws IOException {
+        Files.deleteIfExists(Paths.get(TEST_FILE));
+    }
+
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    public void testTask() throws IOException {
+        Task4.doTask();
 
-        // when
-        int[] evenNumbers = Task1.filter(numbers);
-
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+        String content = Files.readString(Paths.get(TEST_FILE));
+        assertThat(content).isEqualTo(EXPECTED_TEXT + System.lineSeparator());
     }
 }
