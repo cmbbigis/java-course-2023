@@ -6,7 +6,6 @@ import java.nio.file.*;
 import java.util.Comparator;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
 public class Task2Test {
     private static final String TEST_DIR = "testDir";
     private static final String TEST_FILE = "testFile.txt";
@@ -33,8 +32,11 @@ public class Task2Test {
 
     @Test
     public void fileNameCloneFileMultipleTimes() throws IOException {
+        final Path path = Paths.get(TEST_DIR, TEST_FILE);
+
+        Task2.cloneFile(path);
         for (int i = 1; i <= 4; i++) {
-            Task2.cloneFile(Paths.get(TEST_DIR, TEST_FILE));
+            Task2.cloneFile(path);
             assertThat(Files.exists(Paths.get(TEST_DIR, TEST_FILE.substring(0, 8) + " — копия (" + i + ").txt"))).isTrue();
         }
     }

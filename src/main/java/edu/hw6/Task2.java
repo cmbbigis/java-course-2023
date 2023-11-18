@@ -20,8 +20,7 @@ public final class Task2 {
             Path directory = path.getParent();
             int copyNumber = 1;
 
-            if (Files.exists(Paths.get(path.toString().substring(0, path.toString().length() - extension.length())
-                + COPY_STRING + extension))) {
+            if (Files.exists(Paths.get(directory + "/" + baseName + COPY_STRING + extension))) {
                 copyNumber++;
             }
 
