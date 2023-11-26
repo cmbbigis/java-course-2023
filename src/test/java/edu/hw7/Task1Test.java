@@ -1,22 +1,25 @@
 package edu.hw7;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.stream.IntStream;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task1Test {
     @Test
-    @DisplayName("Фильтрация четных чисел")
-    void filterEvenNumbers() {
-        // given
-        int[] numbers = new int[] {1, 2, 3, 4, 5};
+    void testCounter() throws InterruptedException {
+        Task1.Counter counter = new Task1.Counter();
+        int numberOfThreads = 1000;
+        Thread[] threads = new Thread[numberOfThreads];
 
-        // when
-        int[] evenNumbers = Task1.filter(numbers);
+        IntStream.range(0, numberOfThreads).forEach(i -> {
+            threads[i] = new Thread(counter::increment);
+            threads[i].start();
+        });
 
-        // then
-        assertThat(evenNumbers)
-            .containsExactly(2, 4)
-            .hasSize(2);
+        for (Thread thread : threads) {
+            thread.join();
+        }
+
+        assertThat(counter.getCount()).isEqualTo(numberOfThreads);
     }
 }

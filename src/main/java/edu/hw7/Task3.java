@@ -1,54 +1,78 @@
 package edu.hw7;
 
-import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class Task3 {
-    private final static Logger LOGGER = LogManager.getLogger();
-
     private Task3() {
     }
 
-    /**
-     * Filters an array of integers, returning only the even numbers.
-     *
-     * @param numbers the array of integers to filter
-     * @return an array of even integers from the original array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int[] filter(int[] numbers) {
-        Objects.requireNonNull(numbers);
-        LOGGER.trace("Filtering an array {}", numbers);
+    public static class Person {
+        int id;
+        String name;
+        String address;
+        String phoneNumber;
 
-        int count = count(numbers);
-
-        int[] result = new int[count];
-        int idx = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                result[idx++] = number;
-            }
+        public Person(int id, String name, String address, String phoneNumber) {
+            this.id = id;
+            this.name = name;
+            this.address = address;
+            this.phoneNumber = phoneNumber;
         }
-        return result;
     }
 
-    /**
-     * Counts the number of even integers in an array of integers.
-     *
-     * @param numbers the array of integers to count
-     * @return the number of even integers in the array
-     * @throws NullPointerException if the input array is null
-     */
-    public static int count(int[] numbers) {
-        Objects.requireNonNull(numbers);
+    interface PersonDatabase {
+        void add(Person person);
 
-        int count = 0;
-        for (int number : numbers) {
-            if (number % 2 == 0) {
-                ++count;
+        void delete(int id);
+
+        List<Person> findByName(String name);
+
+        List<Person> findByAddress(String address);
+
+        List<Person> findByPhone(String phone);
+    }
+
+    static class PersonDatabaseImpl implements PersonDatabase {
+        private final Map<Integer, Person> peopleById = new HashMap<>();
+        private final Map<String, List<Person>> peopleByName = new HashMap<>();
+        private final Map<String, List<Person>> peopleByAddress = new HashMap<>();
+        private final Map<String, List<Person>> peopleByPhone = new HashMap<>();
+
+        @Override
+        public synchronized void add(Person person) {
+            peopleById.put(person.id, person);
+            peopleByName.computeIfAbsent(person.name, k -> new ArrayList<>()).add(person);
+            peopleByAddress.computeIfAbsent(person.address, k -> new ArrayList<>()).add(person);
+            peopleByPhone.computeIfAbsent(person.phoneNumber, k -> new ArrayList<>()).add(person);
+        }
+
+        @Override
+        public synchronized void delete(int id) {
+            Person person = peopleById.remove(id);
+            if (person != null) {
+                peopleByName.get(person.name).remove(person);
+                peopleByAddress.get(person.address).remove(person);
+                peopleByPhone.get(person.phoneNumber).remove(person);
             }
         }
-        return count;
+
+        @Override
+        public synchronized List<Person> findByName(String name) {
+            return new ArrayList<>(peopleByName.getOrDefault(name, Collections.emptyList()));
+        }
+
+        @Override
+        public synchronized List<Person> findByAddress(String address) {
+            return new ArrayList<>(peopleByAddress.getOrDefault(address, Collections.emptyList()));
+        }
+
+        @Override
+        public synchronized List<Person> findByPhone(String phone) {
+            return new ArrayList<>(peopleByPhone.getOrDefault(phone, Collections.emptyList()));
+        }
     }
 }
