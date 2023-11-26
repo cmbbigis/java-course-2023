@@ -1,13 +1,13 @@
-package edu.hw1;
+package edu.hw7;
 
-import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.Objects;
 
-public final class EvenArrayUtils {
+public final class Task4 {
     private final static Logger LOGGER = LogManager.getLogger();
 
-    private EvenArrayUtils() {
+    private Task4() {
     }
 
     /**
