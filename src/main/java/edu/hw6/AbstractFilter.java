@@ -7,51 +7,49 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-public abstract class AbstractFilter implements DirectoryStream.Filter<Path> {
-    private final Predicate<Path> predicate;
+public interface AbstractFilter extends DirectoryStream.Filter<Path> {
+    boolean accept(Path entry);
 
-    public AbstractFilter(Predicate<Path> predicate) {
-        this.predicate = predicate;
+    default AbstractFilter and(AbstractFilter other) {
+        return entry -> this.accept(entry) && other.accept(entry);
     }
 
-    @Override
-    public boolean accept(Path entry) {
-        return predicate.test(entry);
+    static AbstractFilter regularFile() {
+        return Files::isRegularFile;
     }
 
-    public AbstractFilter and(AbstractFilter other) {
-        return new AbstractFilter(this.predicate.and(other.predicate)) {};
+    static AbstractFilter readable() {
+        return Files::isReadable;
     }
 
-    public static final AbstractFilter REGULAR_FILE = new AbstractFilter(Files::isRegularFile) {};
-    public static final AbstractFilter READABLE = new AbstractFilter(Files::isReadable) {};
-    public static final AbstractFilter WRITABLE = new AbstractFilter(Files::isWritable) {};
+    static AbstractFilter writable() {
+        return Files::isWritable;
+    }
 
-    public static AbstractFilter largerThan(long size) {
-        return new AbstractFilter(path -> {
+    static AbstractFilter largerThan(long size) {
+        return path -> {
             try {
                 return Files.size(path) > size;
             } catch (IOException e) {
                 return false;
             }
-        }) {};
+        };
     }
 
-    public static AbstractFilter extension(String ext) {
-        return new AbstractFilter(path -> path.toString().endsWith(ext)) {};
+    static AbstractFilter extension(String ext) {
+        return path -> path.toString().endsWith(ext);
     }
 
-    public static AbstractFilter regexMatches(String regex) {
+    static AbstractFilter regexMatches(String regex) {
         Pattern pattern = Pattern.compile(regex);
-        return new AbstractFilter(path -> pattern.matcher(path.getFileName().toString()).matches()) {};
+        return path -> pattern.matcher(path.getFileName().toString()).matches();
     }
 
-    public static AbstractFilter magicNumber(int... numbers) {
-        return new AbstractFilter(path -> {
+    static AbstractFilter magicNumber(int... numbers) {
+        return path -> {
             try {
                 byte[] bytes = Files.readAllBytes(path);
                 if (bytes.length < numbers.length) {
@@ -67,17 +65,17 @@ public abstract class AbstractFilter implements DirectoryStream.Filter<Path> {
             } catch (IOException e) {
                 return false;
             }
-        }) {};
+        };
     }
 
-    public static AbstractFilter globMatches(String glob) {
+    static AbstractFilter globMatches(String glob) {
         FileSystem fs = FileSystems.getDefault();
         PathMatcher matcher = fs.getPathMatcher("glob:**" + glob);
-        return new AbstractFilter(matcher::matches) {};
+        return matcher::matches;
     }
 
-    public static AbstractFilter regexContains(String regex) {
+    static AbstractFilter regexContains(String regex) {
         Pattern pattern = Pattern.compile(regex);
-        return new AbstractFilter(path -> pattern.matcher(path.getFileName().toString()).find()) {};
+        return path -> pattern.matcher(path.getFileName().toString()).find();
     }
 }

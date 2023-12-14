@@ -1,6 +1,7 @@
 package edu.hw6;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +36,17 @@ public final class Task6 {
     public static void doTask() {
         for (int port = 0; port <= PORTS_COUNT; port++) {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
-                LOGGER.trace(PORT_STRING + port + " свободен");
+                LOGGER.trace(PORT_STRING + port + " свободен (TCP)");
             } catch (IOException e) {
                 String service = KNOWN_PORTS.getOrDefault(port, "Неизвестный сервис");
-                LOGGER.trace(PORT_STRING + port + " занят. Сервис: " + service);
+                LOGGER.trace(PORT_STRING + port + " занят (TCP). Сервис: " + service);
+            }
+
+            try (DatagramSocket datagramSocket = new DatagramSocket(port)) {
+                LOGGER.trace(PORT_STRING + port + " свободен (UDP)");
+            } catch (IOException e) {
+                String service = KNOWN_PORTS.getOrDefault(port, "Неизвестный сервис");
+                LOGGER.trace(PORT_STRING + port + " занят (UDP). Сервис: " + service);
             }
         }
     }

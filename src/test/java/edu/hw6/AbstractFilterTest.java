@@ -28,19 +28,19 @@ public class AbstractFilterTest {
 
     @Test
     public void regularFile() {
-        AbstractFilter filter = AbstractFilter.REGULAR_FILE;
+        AbstractFilter filter = AbstractFilter.regularFile();
         assertThat(filter.accept(Paths.get(TEST_DIR, TEST_FILE))).isTrue();
     }
 
     @Test
     public void readable() {
-        AbstractFilter filter = AbstractFilter.READABLE;
+        AbstractFilter filter = AbstractFilter.readable();
         assertThat(filter.accept(Paths.get(TEST_DIR, TEST_FILE))).isTrue();
     }
 
     @Test
     public void writable() {
-        AbstractFilter filter = AbstractFilter.WRITABLE;
+        AbstractFilter filter = AbstractFilter.writable();
         assertThat(filter.accept(Paths.get(TEST_DIR, TEST_FILE))).isTrue();
     }
 
