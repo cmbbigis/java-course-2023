@@ -7,7 +7,7 @@ public class FixedThreadPool implements ThreadPool {
     private final Thread[] threads;
     private final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
 
-    public FixedThreadPool(int numThreads) {
+    private FixedThreadPool(int numThreads) {
         threads = new Thread[numThreads];
         for (int i = 0; i < numThreads; i++) {
             threads[i] = new Thread(() -> {
@@ -21,6 +21,10 @@ public class FixedThreadPool implements ThreadPool {
                 }
             });
         }
+    }
+
+    public static FixedThreadPool create(int numThreads) {
+        return new FixedThreadPool(numThreads);
     }
 
     @Override
