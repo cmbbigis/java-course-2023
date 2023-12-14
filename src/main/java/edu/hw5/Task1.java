@@ -3,27 +3,27 @@ package edu.hw5;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class Task1 {
     private Task1() {
     }
 
-    static final int MINUTES_IN_HOUR = 60;
-
     public static String countAverageDuration(String[] periods) {
-        var durations = new ArrayList<Long>();
+        List<Duration> durations = new ArrayList<>();
         for (String period : periods) {
             var dateTimes = period.split(" - ");
             var from = stringToDateTime(dateTimes[0]);
             var to = stringToDateTime(dateTimes[1]);
-            durations.add(Duration.between(from, to).toMinutes());
+            durations.add(Duration.between(from, to));
         }
-        var average = durations.stream()
-            .mapToDouble(l -> l)
-            .average()
-            .orElse(0.0);
-        var hours = (int) (average / MINUTES_IN_HOUR);
-        var minutes = (int) (average % MINUTES_IN_HOUR);
+        Duration total = Duration.ZERO;
+        for (Duration duration : durations) {
+            total = total.plus(duration);
+        }
+        Duration average = total.dividedBy(durations.size());
+        long hours = average.toHours();
+        long minutes = average.minusHours(hours).toMinutes();
         return String.format("%dч %dм", hours, minutes);
     }
 

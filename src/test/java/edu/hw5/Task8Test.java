@@ -31,6 +31,15 @@ public class Task8Test {
     }
 
     @Test
+    void anotherValidStringCheckPattern2() {
+        final String string = "0";
+
+        var isMatches = Task8.isMatchesPattern2(string);
+
+        assertThat(isMatches).isTrue();
+    }
+
+    @Test
     void invalidStringCheckPattern2() {
         final String string = "1101";
 

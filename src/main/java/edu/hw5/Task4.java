@@ -6,8 +6,9 @@ public final class Task4 {
     private Task4() {
     }
 
+    private final static Pattern PATTERN = Pattern.compile("[~!@#$%^&*|]");
+
     public static boolean isPasswordValid(String password) {
-        Pattern pattern = Pattern.compile("[~!@#$%^&*|]");
-        return pattern.matcher(password).find();
+        return PATTERN.matcher(password).find();
     }
 }

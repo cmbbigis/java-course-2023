@@ -9,15 +9,16 @@ public final class Task3 {
     private Task3() {
     }
 
+    private static final DateTimeFormatter[] FORMATTERS = {
+        DateTimeFormatter.ofPattern("yyyy-M-d"),
+        DateTimeFormatter.ofPattern("M/d/yyyy"),
+        DateTimeFormatter.ofPattern("M/d/yy")
+    };
+
     public static Optional<LocalDate> parseDate(String string) {
-        DateTimeFormatter[] formatters = {
-            DateTimeFormatter.ofPattern("yyyy-M-d"),
-            DateTimeFormatter.ofPattern("M/d/yyyy"),
-            DateTimeFormatter.ofPattern("M/d/yy")
-        };
         LocalDate date = null;
 
-        for (DateTimeFormatter formatter : formatters) {
+        for (DateTimeFormatter formatter : FORMATTERS) {
             try {
                 date = LocalDate.parse(string, formatter);
                 break;
@@ -30,9 +31,9 @@ public final class Task3 {
                 date = LocalDate.now().plusDays(1);
             } else if (string.equalsIgnoreCase("today")) {
                 date = LocalDate.now();
-            } else if (string.equalsIgnoreCase("yesterday") || string.endsWith(" day ago")) {
+            } else if (string.equalsIgnoreCase("yesterday") || string.equals("1 day ago")) {
                 date = LocalDate.now().minusDays(1);
-            } else if (string.endsWith(" days ago")) {
+            } else if (string.matches("\\d days ago")) {
                 try {
                     var days = Integer.parseInt(string.substring(0, string.indexOf(" ")));
                     date = LocalDate.now().minusDays(days);

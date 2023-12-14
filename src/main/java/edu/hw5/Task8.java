@@ -12,7 +12,7 @@ public final class Task8 {
     }
 
     public static boolean isMatchesPattern2(String string) {
-        var pattern = Pattern.compile("^(0([01]{2})*[01]|1([01]{2})*$)");
+        var pattern = Pattern.compile("^(0([01]{2})*1?|1([01]{2})*0?)$");
         return pattern.matcher(string).matches();
     }
 

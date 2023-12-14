@@ -82,7 +82,7 @@ public class Task3Test {
     void notADateParseDate() {
         final Optional<LocalDate> expectedResult = Optional.empty();
 
-        var date = Task3.parseDate("not a date");
+        var date = Task3.parseDate("ashdashdhasd 123 askdajsdkasjd days ago");
 
         assertThat(date).isEqualTo(expectedResult);
     }

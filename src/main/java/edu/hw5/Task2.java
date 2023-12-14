@@ -2,6 +2,7 @@ package edu.hw5;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +25,13 @@ public final class Task2 {
     }
 
     public static LocalDate nextFriday13(LocalDate date) {
-        var next13 = date.plusDays(1);
-        while (!(next13.getDayOfMonth() == DAY_OF_FRIDAY && next13.getDayOfWeek() == DayOfWeek.FRIDAY)) {
-            next13 = next13.plusDays(1);
-        }
-        return next13;
+        TemporalAdjuster nextFriday13Adjuster = temporal -> {
+            LocalDate tempDate = (LocalDate) temporal;
+            do {
+                tempDate = tempDate.plusMonths(1).withDayOfMonth(DAY_OF_FRIDAY);
+            } while (tempDate.getDayOfWeek() != DayOfWeek.FRIDAY);
+            return tempDate;
+        };
+        return date.with(nextFriday13Adjuster);
     }
 }
