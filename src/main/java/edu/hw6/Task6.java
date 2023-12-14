@@ -15,6 +15,7 @@ public final class Task6 {
     private final static Logger LOGGER = LogManager.getLogger();
 
     private final static String PORT_STRING = "Порт ";
+    private final static String UNKNOWN_SERVICE_STRING = "Неизвестный сервис";
 
     private static final int PORTS_COUNT = 49151;
     private static final int HTTP_PORT = 80;
@@ -38,14 +39,14 @@ public final class Task6 {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
                 LOGGER.trace(PORT_STRING + port + " свободен (TCP)");
             } catch (IOException e) {
-                String service = KNOWN_PORTS.getOrDefault(port, "Неизвестный сервис");
+                String service = KNOWN_PORTS.getOrDefault(port, UNKNOWN_SERVICE_STRING);
                 LOGGER.trace(PORT_STRING + port + " занят (TCP). Сервис: " + service);
             }
 
             try (DatagramSocket datagramSocket = new DatagramSocket(port)) {
                 LOGGER.trace(PORT_STRING + port + " свободен (UDP)");
             } catch (IOException e) {
-                String service = KNOWN_PORTS.getOrDefault(port, "Неизвестный сервис");
+                String service = KNOWN_PORTS.getOrDefault(port, UNKNOWN_SERVICE_STRING);
                 LOGGER.trace(PORT_STRING + port + " занят (UDP). Сервис: " + service);
             }
         }
