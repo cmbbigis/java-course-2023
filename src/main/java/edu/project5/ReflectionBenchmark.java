@@ -42,7 +42,7 @@ public class ReflectionBenchmark {
     private Function<Student, String> function;
 
     @Setup
-    public void setup() throws NoSuchMethodException, IllegalAccessException, LambdaConversionException {
+    public void setup() throws Throwable {
         student = new Student("Alexander", "Biryukov");
         method = Student.class.getMethod("name");
 
