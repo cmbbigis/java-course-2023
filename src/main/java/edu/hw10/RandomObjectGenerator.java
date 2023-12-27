@@ -46,14 +46,52 @@ public class RandomObjectGenerator {
 
     private Object generateValue(Parameter parameter) {
         Class<?> type = parameter.getType();
+        var notNullAnnotation = parameter.getAnnotation(Annotations.NotNull.class);
+        var minAnnotation = parameter.getAnnotation(Annotations.Min.class);
+        var maxAnnotation = parameter.getAnnotation(Annotations.Max.class);
         if (type == int.class) {
-            return random.nextInt();
+            var max = Integer.MAX_VALUE;
+            var min = Integer.MIN_VALUE;
+            if (maxAnnotation != null) {
+                max = maxAnnotation.value();
+            }
+            if (minAnnotation != null) {
+                min = minAnnotation.value();
+            }
+            return random.nextInt(min, max);
+        } else if (type == long.class) {
+            var max = Long.MAX_VALUE;
+            var min = Long.MIN_VALUE;
+            if (maxAnnotation != null) {
+                max = maxAnnotation.value();
+            }
+            if (minAnnotation != null) {
+                min = minAnnotation.value();
+            }
+            return random.nextLong(min, max);
         } else if (type == double.class) {
-            return random.nextDouble();
+            var max = Double.MAX_VALUE;
+            var min = Double.MIN_VALUE;
+            if (maxAnnotation != null) {
+                max = maxAnnotation.value();
+            }
+            if (minAnnotation != null) {
+                min = minAnnotation.value();
+            }
+            return random.nextDouble(min, max);
         } else if (type == String.class) {
+            if (notNullAnnotation == null) {
+                return null;
+            }
             return UUID.randomUUID().toString();
+        } else if (type == Boolean.class) {
+            return random.nextInt(2) != 0;
         } else {
-            throw new IllegalArgumentException("Unsupported type: " + type);
+            try {
+                return nextObject(type);
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Unsupported type: " + type, e);
+            }
         }
     }
 }

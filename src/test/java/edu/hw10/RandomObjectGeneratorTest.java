@@ -15,42 +15,57 @@ public class RandomObjectGeneratorTest {
 
     @Test
     public void classGetNextObjectWithConstructor() throws Exception {
-        MyClass myClass = rog.nextObject(MyClass.class);
+        MyClassWithoutAnnotations myClass = rog.nextObject(MyClassWithoutAnnotations.class);
         assertThat(myClass).isNotNull();
     }
 
     @Test
     public void classGetNextObjectWithFactoryMethod() throws Exception {
-        MyClass myClass = rog.nextObject(MyClass.class, "create");
+        MyClassWithoutAnnotations myClass = rog.nextObject(MyClassWithoutAnnotations.class, "create");
         assertThat(myClass).isNotNull();
+    }
+
+    @Test
+    public void myRecordCheckThatAnnotationsAreTakenIntoAccount() throws Exception {
+        MyRecord myClass = rog.nextObject(MyRecord.class);
+        assertThat(myClass.name).isNotNull();
+        assertThat(myClass.intValue).isEqualTo(1);
+        assertThat(myClass.longValue).isEqualTo(1);
+        assertThat(myClass.doubleValue).isGreaterThan(1).isLessThan(2);
     }
 
     @Test
     public void unsupportedClassTryGetNextObject() {
         assertThrows(IllegalArgumentException.class, () -> {
-            rog.nextObject(UnsupportedClass.class);
+            rog.nextObject(Character.class);
         });
     }
 
-    public static class MyClass {
+    public static class MyClassWithoutAnnotations {
         private final int value;
         private final String name;
 
-        public MyClass(int value, String name) {
+        public MyClassWithoutAnnotations(int value, String name) {
             this.value = value;
             this.name = name;
         }
 
-        public static MyClass create(int value, String name) {
-            return new MyClass(value, name);
+        public static MyClassWithoutAnnotations create(int value, String name) {
+            return new MyClassWithoutAnnotations(value, name);
         }
     }
 
-    public static class UnsupportedClass {
-        private final MyClass myClass;
-
-        public UnsupportedClass(MyClass myClass) {
-            this.myClass = myClass;
+    public record MyRecord(int intValue, long longValue, double doubleValue, String name) {
+            public MyRecord(
+                @Annotations.Max(2) @Annotations.Min(1) int intValue,
+                @Annotations.Max(2) @Annotations.Min(1) long longValue,
+                @Annotations.Max(2) @Annotations.Min(1) double doubleValue,
+                @Annotations.NotNull String name
+            ) {
+                this.intValue = intValue;
+                this.longValue = longValue;
+                this.doubleValue = doubleValue;
+                this.name = name;
+            }
         }
-    }
 }
