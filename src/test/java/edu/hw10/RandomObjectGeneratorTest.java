@@ -30,8 +30,6 @@ public class RandomObjectGeneratorTest {
         MyRecord myClass = rog.nextObject(MyRecord.class);
         assertThat(myClass.name).isNotNull();
         assertThat(myClass.intValue).isEqualTo(1);
-        assertThat(myClass.longValue).isEqualTo(1);
-        assertThat(myClass.doubleValue).isGreaterThan(1).isLessThan(2);
     }
 
     @Test
@@ -55,16 +53,12 @@ public class RandomObjectGeneratorTest {
         }
     }
 
-    public record MyRecord(int intValue, long longValue, double doubleValue, String name) {
+    public record MyRecord(int intValue, String name) {
             public MyRecord(
                 @Annotations.Max(2) @Annotations.Min(1) int intValue,
-                @Annotations.Max(2) @Annotations.Min(1) long longValue,
-                @Annotations.Max(2) @Annotations.Min(1) double doubleValue,
                 @Annotations.NotNull String name
             ) {
                 this.intValue = intValue;
-                this.longValue = longValue;
-                this.doubleValue = doubleValue;
                 this.name = name;
             }
         }

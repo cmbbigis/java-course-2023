@@ -2,7 +2,6 @@ package edu.hw10;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;

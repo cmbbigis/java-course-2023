@@ -59,33 +59,10 @@ public class RandomObjectGenerator {
                 min = minAnnotation.value();
             }
             return random.nextInt(min, max);
-        } else if (type == long.class) {
-            var max = Long.MAX_VALUE;
-            var min = Long.MIN_VALUE;
-            if (maxAnnotation != null) {
-                max = maxAnnotation.value();
-            }
-            if (minAnnotation != null) {
-                min = minAnnotation.value();
-            }
-            return random.nextLong(min, max);
-        } else if (type == double.class) {
-            var max = Double.MAX_VALUE;
-            var min = Double.MIN_VALUE;
-            if (maxAnnotation != null) {
-                max = maxAnnotation.value();
-            }
-            if (minAnnotation != null) {
-                min = minAnnotation.value();
-            }
-            return random.nextDouble(min, max);
         } else if (type == String.class) {
-            if (notNullAnnotation == null) {
-                return null;
-            }
-            return UUID.randomUUID().toString();
+            return notNullAnnotation == null ? null : UUID.randomUUID().toString();
         } else if (type == Boolean.class) {
-            return random.nextInt(2) != 0;
+            return random.nextBoolean();
         } else {
             try {
                 return nextObject(type);
